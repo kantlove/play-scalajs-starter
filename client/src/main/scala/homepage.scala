@@ -1,16 +1,20 @@
-package homepage
-
 import org.scalajs.jquery.jQuery
-import scalajs._
+import shared.Messages
+
 import scala.concurrent.duration._
+import scala.scalajs.js
 
 object HomePage {
   def main(args: Array[String]): Unit = {
-    val text = "made by Play & ScalaJS"
-    for(i <- 0 to text.length) {
-      js.timers.setTimeout(1.second) {
-        jQuery("h3").text(text.substring(0, i))
-      }
+    updateText(Messages.title)
+  }
+
+  private def updateText(given: String, i: Int = 0): Unit = {
+    js.timers.setTimeout(100.millis) {
+      val prefix = given.substring(0, i)
+      jQuery("h3").text(prefix)
+
+      if(i <= given.length) updateText(given, i + 1)
     }
   }
 }

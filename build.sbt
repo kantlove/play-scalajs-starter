@@ -1,3 +1,10 @@
+/**
+  * To compile run: `sbt compile`
+  * To run the server: `sbt server/run`
+  *
+  * @note using `sbt run` doesn't work
+  */
+
 val commonSettings = Seq(
   organization := "com.takiu",
   scalaVersion := "2.12.4"
@@ -29,7 +36,8 @@ lazy val server = (project in file("server"))
 
     libraryDependencies ++= Seq(
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
+      "com.vmunier" %% "scalajs-scripts" % "1.1.1"
     )
   )
   .enablePlugins(PlayScala)

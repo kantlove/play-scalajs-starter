@@ -1,8 +1,9 @@
-package homepage.controllers
+package controllers
 
 import javax.inject._
 import play.api._
 import play.api.mvc._
+import shared.Messages
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -19,6 +20,9 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
    * a path of `/`.
    */
   def index() = Action { implicit request: Request[AnyContent] =>
+    Logger.info("Welcome!")
+    Logger.info(s"${Messages.title}")
+
     Ok(views.html.index())
   }
 }

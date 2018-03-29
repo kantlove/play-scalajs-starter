@@ -34,6 +34,15 @@
     * the page content. *@
     @content
 
-    <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
+    @*
+    * With library scalajs-scripts, here we can load scripts generated from ScalaJS in `client` project.
+    * `scalajs.html.scripts` means we are calling the 'scripts.scala.html' template created by the library.
+    * See: https://github.com/vmunier/scalajs-scripts
+    *@
+    @scalajs.html.scripts(
+      "homepage-client",
+      name => routes.Assets.versioned(name).toString,
+      name => getClass.getResource(s"/public/$name") != null
+    )
     </body>
 </html>
