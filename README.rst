@@ -33,4 +33,4 @@ To watch file changes and run automatically, you have to open sbt console first:
   # open SBT console
   sbt
   # prefix '~' to the command to watch file change
-  > ~run
+  > ~server/run
