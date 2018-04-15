@@ -1,5 +1,5 @@
 package shared
 
 object Messages {
-  def title = "made by Play & ScalaJS"
+  def title = "smart toy for smart kids"
 }
