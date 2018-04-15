@@ -17,6 +17,9 @@
     @* Bulma CSS framework *@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
 
+    @* Icons *@
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
     @* Fonts *@
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
 
@@ -34,6 +37,8 @@
     * the page content. *@
     @content
 
+    @footer()
+
     @*
     * With library scalajs-scripts, here we can load scripts generated from ScalaJS in `client` project.
     * `scalajs.html.scripts` means we are calling the 'scripts.scala.html' template created by the library.
@@ -44,5 +49,5 @@
       name => routes.Assets.versioned(name).toString,
       name => getClass.getResource(s"/public/$name") != null
     )
-    </body>
+  </body>
 </html>

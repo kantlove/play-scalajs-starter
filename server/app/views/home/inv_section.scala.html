@@ -1,0 +1,18 @@
+@(title: String, image: String)(text: Html)
+
+<section class="section">
+  <div class="container is-fluid">
+    <div class="columns is-vcentered">
+      <div class="column is-3 is-offset-1">
+        <img class="image" src="@routes.Assets.versioned(image)">
+      </div>
+
+      <div class="column is-6 is-offset-1">
+        <p class="title has-text-right">@title</p>
+        <p class="has-text-right has-text-justified is-size-5">
+        @text
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
