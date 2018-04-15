@@ -1,7 +1,5 @@
 package controllers
 
-import anorm.Macro.ColumnNaming
-import anorm.{Macro, SqlStringInterpolation}
 import javax.inject._
 import models.Subscription
 import play.api._
@@ -39,10 +37,10 @@ class Home @Inject()(db: Database, parsers: PlayBodyParsers, cc: ControllerCompo
   def subscriptions() = Action {
     db withTransaction { implicit conn =>
       // Insert some test data
-      SQL"insert into subscriptions (email) values ('abc@mail.com')".executeInsert()
+      val fakeSub = Subscription("xyz@mail.com")
+      Subscription.insert(fakeSub)
 
-      val parser = Macro.namedParser[Subscription](ColumnNaming.SnakeCase)
-      val subs = SQL"select * from subscriptions".as(parser.*)
+      val subs = Subscription.select()
 
       implicit val jsonWriter = Json.writes[Subscription]
       val json = Json.toJson(subs)
@@ -65,11 +63,11 @@ class Home @Inject()(db: Database, parsers: PlayBodyParsers, cc: ControllerCompo
 
     Try {
       db withTransaction { implicit conn =>
-        SQL"insert into subscriptions (email) values ($email)".executeInsert()
+        Subscription.insert(Subscription(email))
       }
     } match {
       case Success(_) =>
-        Logger.info(s"Subcribed $email")
+        Logger.info(s"Subscribed $email")
         Redirect(routes.Home.index())
 
       case Failure(e) =>
@@ -81,6 +79,5 @@ class Home @Inject()(db: Database, parsers: PlayBodyParsers, cc: ControllerCompo
 
 // TODO: add live chat. A good service: https://www.tawk.to
 // TODO: add google analytic
-// TODO: integrate database to save subscribed email
 // TODO: ensure responsiveness
 // TODO: add tests

@@ -19,6 +19,9 @@ lazy val server = (project in file("server"))
     name := "homepage-server",
     version := "0.1.0",
 
+    // show macro debug info
+    scalacOptions in Compile ++= Seq("-Ymacro-debug-lite"),
+
     /**
       * lists the ScalaJS projects whose output is used by the server
       * @see https://github.com/vmunier/sbt-web-scalajs#how-it-works
@@ -47,7 +50,7 @@ lazy val server = (project in file("server"))
     )
   )
   .enablePlugins(PlayScala)
-  .dependsOn(sharedJVM)
+  .dependsOn(sharedJVM, macros)
 
 /**
   * Client (front-end) settings
@@ -79,3 +82,13 @@ lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
   .settings(commonSettings)
 lazy val sharedJVM = shared.jvm
 lazy val sharedJS = shared.js
+
+lazy val macros = (project in file("macros"))
+  .settings(commonSettings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.scala-lang" % "scala-reflect" % "2.12.4",
+      jdbc,
+      "org.playframework.anorm" %% "anorm" % "2.6.1"
+    )
+  )
