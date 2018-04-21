@@ -19,8 +19,13 @@ lazy val server = (project in file("server"))
     name := "homepage-server",
     version := "0.1.0",
 
-    // show macro debug info
-    scalacOptions in Compile ++= Seq("-Ymacro-debug-lite"),
+    /**
+     * flag "-Ypartial-unification" improves type inference, is a requirement in any scala-FP project
+     *
+     * @see https://issues.scala-lang.org/browse/SI-2712
+     *      https://gist.github.com/djspiewak/7a81a395c461fd3a09a6941d4cd040f2
+     */
+    scalacOptions in Compile ++= Seq("-Ypartial-unification"),
 
     /**
       * lists the ScalaJS projects whose output is used by the server
@@ -88,7 +93,6 @@ lazy val macros = (project in file("macros"))
   .settings(
     libraryDependencies ++= Seq(
       "org.scala-lang" % "scala-reflect" % "2.12.4",
-      jdbc,
-      "org.playframework.anorm" %% "anorm" % "2.6.1"
+      "org.tpolecat" %% "doobie-core" % "0.5.2"
     )
   )

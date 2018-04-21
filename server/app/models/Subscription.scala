@@ -1,23 +1,18 @@
 package models
 
-import java.sql.Connection
+import java.time.Instant
 
-import anorm.Macro.ColumnNaming
-import anorm.{Macro, RowParser}
-import macros.SqlMacros
+import models.core.{BaseModel, Repository}
 
-
-case class Subscription(email: String) extends BaseModel
+/**
+ * Although `created_at` is already defined in [[models.core.BaseModel]],
+ * we still need to explicitly include it in the constructor of each model
+ * if we want it to appear in the result of the JSON parser from Play.
+ *
+ * @see https://www.playframework.com/documentation/2.5.x/ScalaJsonAutomated#Requirements
+ */
+case class Subscription(email: String, created_at: Instant = Instant.now()) extends BaseModel
 
 object Subscription extends Repository[Subscription] {
-  override def parser: RowParser[Subscription] =
-    Macro.namedParser[Subscription](ColumnNaming.SnakeCase)
-
-  override def select()(implicit c: Connection): Seq[Subscription] = {
-    SqlMacros.select[Subscription].as(parser.*)
-  }
-
-  override def insert(a: Subscription)(implicit c: Connection): Unit = {
-    SqlMacros.insert(a).executeInsert()
-  }
+  override def tableName: String = "subscriptions"
 }
