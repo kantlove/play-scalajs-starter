@@ -1,3 +1,5 @@
+package client
+
 import fr.hmil.roshttp.HttpRequest
 import fr.hmil.roshttp.body.URLEncodedBody
 import monix.execution.Scheduler.Implicits.global
@@ -9,6 +11,10 @@ import scala.scalajs.js // TODO: what's this?
 
 object HomePage {
   def main(args: Array[String]): Unit = {
+    setupUI()
+  }
+
+  def setupUI(): Unit = {
     updateText(Messages.title)
 
     setupHandlers()
