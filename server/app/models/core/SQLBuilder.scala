@@ -19,9 +19,6 @@ object SQLBuilder {
     val columns = fields.mkString(", ")
     val commas = Seq.fill(fields.length)('?').mkString(", ")
 
-    s"""
-       |insert into $tableName ($columns)
-       |values ($commas)
-     """.stripMargin
+    s"insert into $tableName ($columns) values ($commas)"
   }
 }

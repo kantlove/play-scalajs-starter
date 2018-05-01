@@ -7,7 +7,14 @@
 
 val commonSettings = Seq(
   organization := "com.takiu",
-  scalaVersion := "2.12.4"
+  scalaVersion := "2.12.4",
+
+  /**
+   * flag "-unchecked" will tell us about potential problem due to type erasure
+   *
+   * @see https://stackoverflow.com/q/1094173/3778765
+   */
+  scalacOptions in Compile ++= Seq("-unchecked")
 )
 
 /**
@@ -78,6 +85,7 @@ lazy val client = (project in file("client"))
   )
   .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
   .dependsOn(sharedJS)
+
 
 /**
   * Shared code that is compiled for both ScalaJS and Play (using JVM)

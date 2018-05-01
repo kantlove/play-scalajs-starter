@@ -17,7 +17,7 @@ import scala.util.{Failure, Success, Try}
  * application's index page.
  */
 @Singleton
-class Home @Inject()(db: Database, parsers: PlayBodyParsers, cc: ControllerComponents) extends AbstractController(cc) {
+class Home @Inject()(val db: Database, parsers: PlayBodyParsers, cc: ControllerComponents) extends AbstractController(cc) {
 
   /**
    * Create an Action to render an HTML page. An Action is like a
@@ -36,10 +36,6 @@ class Home @Inject()(db: Database, parsers: PlayBodyParsers, cc: ControllerCompo
 
   def subscriptions() = Action {
     db withTransaction { implicit conn =>
-      // Insert some test data
-      val fakeSub = Subscription("xyz@mail.com")
-      Subscription.insert(fakeSub)
-
       val subs = Subscription.select()
 
       implicit val jsonWriter = Json.writes[Subscription]
